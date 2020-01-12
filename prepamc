@@ -25,8 +25,7 @@ curl $url 2>/dev/null |
 	sed -E -e 's/== ?See also ?==//' |
 	sed -E -e 's/== ?(.*) ?==/## \1/' |
 	perl -00 -lpe' ' | #modified from https://stackoverflow.com/a/39734223/
-	cat <(echo "# $year AMC $test") - |
-	cat \
+	cat <(echo "# $year AMC $test") - \
 	> $out
 
 typora $out & disown
