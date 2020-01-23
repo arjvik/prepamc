@@ -3,16 +3,27 @@ set -eo pipefail
 
 year="$1"
 test="${2^^}" # uppercase the A/B
-out=${3:-"$HOME/Documents/Math/$year AMC $test.md"}
+filename="$3"
 
-if ! [[ $year =~ 20[0-9][0-9] && $test =~ 1[02][AB] ]]; then
-	echo "Usage: $0 <year: 20__> <test: 10A/10B/12A/12B> [destination file]"
+if [[ $year =~ 20[0-9][0-9] && $test =~ 1[02][AB] ]]; then
+  name="$year AMC $test"
+  url="https://artofproblemsolving.com/wiki/index.php?title=${year}_AMC_${test}_Problems&action=edit"
+elif [[ $year =~ 20[0-9][0-9] && $test =~ AIME[12] ]]; then
+  number="${test:4:5}"
+  name="$year AIME $number"
+  numeral="${number/1/I}"
+  numeral="${numeral/2/II}"
+  url="https://artofproblemsolving.com/wiki/index.php?title=${year}_AIME_${numeral}_Problems&action=edit"
+else
+  echo "Usage: $0 <year: 20__> <test: 10A/10B/12A/12B/AIME1/AIME2> [destination file]"
 	exit 1
 fi
 
-url="https://artofproblemsolving.com/wiki/index.php?title=${year}_AMC_${test}_Problems&action=edit"
-
-# whªt?
+if [[ -d ${filename:="$HOME/Documents/Math"} ]]; then
+  out="$filename/$name.md"
+else
+  out="$filename"
+fi
 
 curl $url 2>/dev/null |
 	perl -MHTML::TreeBuilder -MHTML::Element -le '
@@ -25,8 +36,7 @@ curl $url 2>/dev/null |
 	sed -E -e 's/== ?See also ?==//' |
 	sed -E -e 's/== ?(.*) ?==/## \1/' |
 	perl -00 -lpe' ' | #modified from https://stackoverflow.com/a/39734223/
-	cat <(echo "# $year AMC $test") - \
-	> $out
+	cat <(echo "# $name") - > "$out"
 
-typora $out & disown
-xdg-open "https://artofproblemsolving.com/wiki/index.php/${year}_AMC_${test}_Problems" & disown
+typora "$out" & disown
+xdg-open "${url/&action=edit/}" & disown

@@ -4,7 +4,7 @@ Quick script to download an AMC 10/12 test from AoPS, format it, and get it read
 **Usage:**
 
 ```bash
-$ prepamc <year: 20__> <test: 10A/10B/12A/12B> [destination file]
+$ prepamc <year: 20__> <test: 10A/10B/12A/12B/AIME1/AIME2> [destination file]
 ```
 
 **Example:**
