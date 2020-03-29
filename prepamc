@@ -5,16 +5,16 @@ year="$1"
 test="${2^^}" # uppercase the A/B
 filename="$3"
 
-if [[ $year =~ 20[0-9][0-9] && $test =~ 1[02][AB] ]]; then
+if [[ $year =~ 20[0-9][0-9] && $test =~ ^1[02][AB]$ ]]; then
   name="$year AMC $test"
   url="https://artofproblemsolving.com/wiki/index.php?title=${year}_AMC_${test}_Problems&action=edit"
-elif [[ $year =~ 20[0-9][0-9] && $test =~ AIME[12] ]]; then
+elif [[ $year =~ 20[0-9][0-9] && $test =~ ^AIME[12]$ ]]; then
   number="${test:4:5}"
   name="$year AIME $number"
   numeral="${number/1/I}"
   numeral="${numeral/2/II}"
   url="https://artofproblemsolving.com/wiki/index.php?title=${year}_AIME_${numeral}_Problems&action=edit"
-elif [[ $year =~ 20[0-9][0-9] && $test =~ 8 ]]; then
+elif [[ $year =~ 20[0-9][0-9] && $test =~ ^8$ ]]; then
   name="$year AMC $test"
   url="https://artofproblemsolving.com/wiki/index.php?title=${year}_AMC_${test}_Problems&action=edit"
 else
