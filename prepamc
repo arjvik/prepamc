@@ -22,7 +22,7 @@ else
 	exit 1
 fi
 
-if [[ -d ${filename:="$HOME/Documents/Math"} ]]; then
+if [[ -d ${filename:="$HOME/Documents/Math/AMC"} ]]; then
 	out="$filename/$name.md"
 else
 	out="$filename"
