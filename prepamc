@@ -34,7 +34,7 @@ curl $url 2>/dev/null |
 		foreach ($html->look_down(_tag => "textarea")) {
 			print $_->as_text
 		}' | #modified from https://unix.stackexchange.com/a/64747/
-	sed -E -e 's/^\{\{.*\}\}$//' -e 's/^\[\[.*\]\]$//' |
+	sed -E -e 's/^\*? ?\{\{.*\}\}$//' -e 's/^\*? ?\[\[.*\]\]$//' |
 	sed -E -e 's/<\/?(c|)math>/$$/g' |
 	sed -E -e 's/== ?See also ?==//' |
 	sed -E -e 's/== ?(.*) ?==/## \1/' |
